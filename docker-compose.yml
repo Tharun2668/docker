@@ -1,0 +1,45 @@
+---
+version: "3"
+services:
+    db:
+      container_name: db
+      path: ./database/
+      ports:
+       - "3096:3096"
+      networks:
+       - my_net
+    book:
+      container_name: book_service
+      path: ./book/
+      ports:
+        - "5002:5002"
+      networks:
+        - my_net
+    borrow:
+      container_name: borrow_service
+      path: ./borrow/
+      ports:
+        - "5003:5003"
+      networks:
+        - my_net
+    auth:
+      container_name: auth_service
+      path: ./auth/
+      ports:
+        - "5001:5001"
+      networks:
+        - my_network
+     app:
+       container_name: application
+       path: .
+       ports: 
+         - "5000:5000"
+       networks:
+         - my_net
+networks:
+   my_net:
+   driver: host
+
+
+         
+       
