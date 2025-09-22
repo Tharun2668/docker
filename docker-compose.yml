@@ -1,0 +1,56 @@
+## this the fle how to write the docker-compose and the file is used to run by docker stack
+## docker stack is used to create mutliple service on multiple host.
+## to run the docker stack ---> docker stack deploy -c (dockerfilename) myapplication(this is servicename)
+## eg: docker stack deploy -docker-compose.yml myapplication1
+## the below code is the python application code
+## here we need to create a custom network which overlay, the overay network is used to communucate multiple container on multiple host
+---
+version: "3"
+services:
+  db:
+    image: arunkumark2786/myrepo:v1
+    deploy:
+      replicas: 2
+    ports:
+        - "3306"
+    networks:
+      - my_overlay_net
+
+  auth_service:
+    image: arunkumark2786/myrepo:auth
+    deploy:
+      replicas: 2
+    ports:
+      - "5001"
+    networks:
+      - my_overlay_net
+
+  borrow_service:
+    image: arunkumark2786/myrepo:borrow
+    deploy:
+      replicas: 2
+    ports:
+      - "5003"
+    networks:
+      - my_overlay_net
+
+  book_service:
+    image: arunkumark2786/myrepo:book
+    deploy:
+      replicas: 2
+    ports:
+      - "5002"
+    networks:
+      - my_overlay_net
+
+  appli:
+    image: arunkumark2786/myrepo:app
+    deploy:
+      replicas: 2
+    ports:
+      - "5000"
+networks:
+  my_overlay_net:
+    driver: overlay
+                    
+                                                                                                                                                      18,8          Top
